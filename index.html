@@ -34,6 +34,7 @@
     <header class="site-header">
         <nav class="main-nav">
             <ul>
+                <li><a href="#hero"><span class="nav-index">00</span>Home</a></li>
                 <li><a href="#about"><span class="nav-index">01</span>About</a></li>
                 <li><a href="#resume"><span class="nav-index">02</span>Resume</a></li>
             </ul>
@@ -145,8 +146,9 @@
             .then((r) => (r.ok ? r.json() : null))
             .then((c) => {
                 if (!c) return;
+                const [year, month, day] = c.commit.committer.date.slice(0, 10).split('-');
                 document.getElementById('site-rev').textContent =
-                    `Rev ${c.sha.slice(0, 7)} · ${c.commit.committer.date.slice(0, 10)}`;
+                    `Rev ${c.sha.slice(0, 7)} · ${day}-${month}-${year}`;
             })
             .catch(() => { });
 
