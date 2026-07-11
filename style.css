@@ -298,6 +298,78 @@ h1 {
     width: 100%;
 }
 
+/* ---------- copy button ---------- */
+
+.copy-btn {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background-color: transparent;
+    border: 1px solid var(--line);
+    padding: 0.15rem 0.5rem;
+    margin-left: 0.75rem;
+    cursor: pointer;
+    transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.copy-btn:hover,
+.copy-btn:focus-visible,
+.copy-btn.copied {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+/* ---------- terminal ---------- */
+
+.terminal {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 200;
+    background-color: rgba(11, 13, 16, 0.96);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 1rem clamp(1.25rem, 4vw, 2.5rem);
+}
+
+.terminal-output {
+    max-height: 30vh;
+    overflow-y: auto;
+}
+
+.terminal-output p {
+    color: var(--text-muted);
+    margin-bottom: 0.3rem;
+}
+
+.terminal-line {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+}
+
+.terminal-prompt {
+    color: var(--accent);
+    white-space: nowrap;
+}
+
+.terminal input {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    color: var(--text);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+}
+
 /* ---------- error page ---------- */
 
 .error-section {
@@ -419,5 +491,76 @@ h1 {
 
     .nav-index {
         display: none;
+    }
+}
+
+/* ---------- print ---------- */
+
+@media print {
+    body {
+        background-color: #fff;
+        color: #111;
+    }
+
+    body::before,
+    .site-header,
+    .cta-button,
+    .resume-container,
+    .download-button,
+    .terminal,
+    .copy-btn {
+        display: none;
+    }
+
+    .hero-section {
+        min-height: 0;
+        padding: 1rem 0;
+    }
+
+    .hero-section > * {
+        animation: none;
+    }
+
+    .content-section {
+        padding: 1.25rem 0;
+    }
+
+    .js .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    h1,
+    h2,
+    .section-label,
+    .spec-row dd,
+    .about-text {
+        color: #111;
+    }
+
+    a {
+        color: #14508c;
+    }
+
+    .hero-role,
+    .section-note,
+    .spec-row dt,
+    .site-footer {
+        color: #555;
+    }
+
+    .hero-spec,
+    .site-footer {
+        border-top-color: #bbb;
+    }
+
+    .spec-row {
+        border-bottom-color: #ddd;
+    }
+
+    .section-label::before,
+    .section-label::after {
+        background-color: #bbb;
     }
 }
