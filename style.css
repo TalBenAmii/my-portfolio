@@ -108,6 +108,11 @@ a:focus-visible {
     margin-right: 0.5em;
 }
 
+.main-nav a.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+}
+
 /* ---------- layout ---------- */
 
 main {
@@ -284,6 +289,33 @@ h1 {
     border: none;
 }
 
+.resume-preview {
+    display: none;
+}
+
+.resume-preview img {
+    display: block;
+    width: 100%;
+}
+
+/* ---------- error page ---------- */
+
+.error-section {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    min-height: calc(100vh - var(--header-h));
+}
+
+.error-kicker {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+}
+
 /* ---------- footer ---------- */
 
 .site-footer {
@@ -364,7 +396,11 @@ h1 {
 
 @media (max-width: 768px) {
     .resume-iframe {
-        height: 65vh;
+        display: none;
+    }
+
+    .resume-preview {
+        display: block;
     }
 
     .spec-row {

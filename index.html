@@ -8,6 +8,15 @@
     <meta name="theme-color" content="#0b0d10">
     <title>Tal Ben Ami - Portfolio</title>
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://talbenami.com/">
+    <meta property="og:title" content="Tal Ben Ami - Portfolio">
+    <meta property="og:description"
+        content="Computer Engineering BSc student. Parallel programming, performance engineering for AI systems, real-time embedded systems.">
+    <meta property="og:image" content="https://talbenami.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
@@ -82,6 +91,9 @@
                     <p>Your browser does not support embedded PDFs. Please <a href="resume.pdf" download>download the
                             PDF</a> to view it.</p>
                 </iframe>
+                <a href="resume.pdf" class="resume-preview" target="_blank" rel="noopener noreferrer">
+                    <img src="resume-preview.png" alt="First page of Tal Ben Ami's resume">
+                </a>
             </div>
             <a href="resume.pdf" download class="download-button">Download resume (PDF)</a>
         </section>
@@ -105,6 +117,17 @@
             }
         }, { threshold: 0.12 });
         document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        const navLinks = document.querySelectorAll('.main-nav a');
+        const spy = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                navLinks.forEach((l) => l.classList.remove('active'));
+                const link = document.querySelector(`.main-nav a[href="#${entry.target.id}"]`);
+                if (link) link.classList.add('active');
+            }
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        document.querySelectorAll('main section[id]').forEach((s) => spy.observe(s));
     </script>
 </body>
 
