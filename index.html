@@ -8,6 +8,15 @@
     <meta name="theme-color" content="#0b0d10">
     <title>Tal Ben Ami - Portfolio</title>
 
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://talbenami.com/">
+    <meta property="og:title" content="Tal Ben Ami - Portfolio">
+    <meta property="og:description"
+        content="Computer Engineering BSc student. Parallel programming, performance engineering for AI systems, real-time embedded systems.">
+    <meta property="og:image" content="https://talbenami.com/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
@@ -47,7 +56,10 @@
                 </div>
                 <div class="spec-row">
                     <dt>Email</dt>
-                    <dd><a href="mailto:talba225@gmail.com">talba225@gmail.com</a></dd>
+                    <dd>
+                        <a href="mailto:talba225@gmail.com">talba225@gmail.com</a>
+                        <button type="button" class="copy-btn" data-copy="talba225@gmail.com">Copy</button>
+                    </dd>
                 </div>
                 <div class="spec-row">
                     <dt>LinkedIn</dt>
@@ -82,6 +94,9 @@
                     <p>Your browser does not support embedded PDFs. Please <a href="resume.pdf" download>download the
                             PDF</a> to view it.</p>
                 </iframe>
+                <a href="resume.pdf" class="resume-preview" target="_blank" rel="noopener noreferrer">
+                    <img src="resume-preview.png" alt="First page of Tal Ben Ami's resume">
+                </a>
             </div>
             <a href="resume.pdf" download class="download-button">Download resume (PDF)</a>
         </section>
@@ -89,8 +104,17 @@
 
     <footer class="site-footer">
         <p>&copy; <span id="current-year"></span> Tal Ben Ami</p>
+        <p id="site-rev"></p>
         <p>All rights reserved</p>
     </footer>
+
+    <div id="terminal" class="terminal" hidden>
+        <div id="terminal-output" class="terminal-output"></div>
+        <form id="terminal-form" class="terminal-line">
+            <label for="terminal-input" class="terminal-prompt">tal@talbenami.com:~$</label>
+            <input id="terminal-input" autocomplete="off" spellcheck="false" aria-label="Terminal command">
+        </form>
+    </div>
 
     <script>
         document.documentElement.classList.add('js');
@@ -105,6 +129,81 @@
             }
         }, { threshold: 0.12 });
         document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        const navLinks = document.querySelectorAll('.main-nav a');
+        const spy = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (!entry.isIntersecting) continue;
+                navLinks.forEach((l) => l.classList.remove('active'));
+                const link = document.querySelector(`.main-nav a[href="#${entry.target.id}"]`);
+                if (link) link.classList.add('active');
+            }
+        }, { rootMargin: '-45% 0px -50% 0px' });
+        document.querySelectorAll('main section[id]').forEach((s) => spy.observe(s));
+
+        fetch('https://api.github.com/repos/TalBenAmii/my-portfolio/commits/main')
+            .then((r) => (r.ok ? r.json() : null))
+            .then((c) => {
+                if (!c) return;
+                document.getElementById('site-rev').textContent =
+                    `Rev ${c.sha.slice(0, 7)} · ${c.commit.committer.date.slice(0, 10)}`;
+            })
+            .catch(() => { });
+
+        document.querySelectorAll('.copy-btn').forEach((btn) => {
+            btn.addEventListener('click', () => {
+                navigator.clipboard.writeText(btn.dataset.copy).then(() => {
+                    btn.textContent = 'Copied';
+                    btn.classList.add('copied');
+                    setTimeout(() => {
+                        btn.textContent = 'Copy';
+                        btn.classList.remove('copied');
+                    }, 1500);
+                });
+            });
+        });
+
+        const terminal = document.getElementById('terminal');
+        const termOutput = document.getElementById('terminal-output');
+        const termInput = document.getElementById('terminal-input');
+        const termCommands = {
+            help: () => "commands: whoami, ls, cat resume, open github, open linkedin, email, clear, exit",
+            whoami: () => 'Tal Ben Ami, Computer Engineering BSc student',
+            ls: () => 'about  resume.pdf  github  linkedin',
+            email: () => 'talba225@gmail.com',
+            'cat resume': () => { window.open('resume.pdf', '_blank'); return 'opening resume.pdf'; },
+            'open github': () => { window.open('https://github.com/TalBenAmii', '_blank'); return 'opening github.com/TalBenAmii'; },
+            'open linkedin': () => { window.open('https://www.linkedin.com/in/tal-ben-ami/', '_blank'); return 'opening linkedin.com/in/tal-ben-ami'; },
+        };
+        const termPrint = (text) => {
+            const line = document.createElement('p');
+            line.textContent = text;
+            termOutput.appendChild(line);
+            termOutput.scrollTop = termOutput.scrollHeight;
+        };
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === '`') {
+                e.preventDefault();
+                terminal.hidden = !terminal.hidden;
+                if (!terminal.hidden) {
+                    if (!termOutput.childElementCount) termPrint("type 'help' for commands");
+                    termInput.focus();
+                }
+            } else if (e.key === 'Escape' && !terminal.hidden) {
+                terminal.hidden = true;
+            }
+        });
+        document.getElementById('terminal-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const cmd = termInput.value.trim().toLowerCase();
+            termInput.value = '';
+            if (!cmd) return;
+            termPrint('$ ' + cmd);
+            if (cmd === 'clear') { termOutput.textContent = ''; return; }
+            if (cmd === 'exit') { terminal.hidden = true; return; }
+            const handler = termCommands[cmd];
+            termPrint(handler ? handler() : `command not found: ${cmd}. type 'help'`);
+        });
     </script>
 </body>
 
