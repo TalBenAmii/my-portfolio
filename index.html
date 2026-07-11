@@ -5,12 +5,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Tal Ben Ami's professional portfolio website.">
+    <meta name="theme-color" content="#0b0d10">
     <title>Tal Ben Ami - Portfolio</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="style.css">
@@ -21,60 +22,86 @@
     <header class="site-header">
         <nav class="main-nav">
             <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#resume">Resume</a></li>
-                <li><a href="#contact">Contact</a></li>
+                <li><a href="#about"><span class="nav-index">01</span>About</a></li>
+                <li><a href="#resume"><span class="nav-index">02</span>Resume</a></li>
             </ul>
         </nav>
     </header>
 
     <main>
         <section id="hero" class="hero-section">
-            <div class="hero-content">
-                <h1>Tal Ben Ami</h1>
-                <h2>Computer Engineering BSc student.</h2>
-                <a href="#resume" class="cta-button">View My Resume</a>
-            </div>
+            <h1>Tal Ben&nbsp;Ami</h1>
+            <p class="hero-role">Computer Engineering BSc student.</p>
+
+            <dl class="hero-spec">
+                <div class="spec-row">
+                    <dt>Focus</dt>
+                    <dd>Parallel programming &middot; Performance engineering for AI systems</dd>
+                </div>
+                <div class="spec-row">
+                    <dt>Interests</dt>
+                    <dd>Real-time embedded systems &middot; Reverse engineering</dd>
+                </div>
+                <div class="spec-row">
+                    <dt>Email</dt>
+                    <dd><a href="mailto:talba225@gmail.com">talba225@gmail.com</a></dd>
+                </div>
+                <div class="spec-row">
+                    <dt>LinkedIn</dt>
+                    <dd><a href="https://www.linkedin.com/in/tal-ben-ami/" target="_blank"
+                            rel="noopener noreferrer">linkedin.com/in/tal-ben-ami</a></dd>
+                </div>
+                <div class="spec-row">
+                    <dt>GitHub</dt>
+                    <dd><a href="https://github.com/TalBenAmii" target="_blank"
+                            rel="noopener noreferrer">github.com/TalBenAmii</a></dd>
+                </div>
+            </dl>
+
+            <a href="#resume" class="cta-button">View my resume <span aria-hidden="true">&darr;</span></a>
         </section>
 
-        <section id="about" class="content-section">
-            <h2>About Me</h2>
-            <p>
+        <section id="about" class="content-section reveal">
+            <h2 class="section-label"><span class="section-index">01</span>About</h2>
+            <p class="about-text">
                 I'm a 23 year old student with a strong interest in parallel programming, accelerated computing for AI,
                 and building fast, real-time embedded systems. I love diving into low-level stuff, whether it's reverse
                 engineering, messing with system internals, or just figuring out how things work under the hood.
             </p>
         </section>
 
-        <section id="resume" class="content-section resume-section">
-            <h2>My Resume</h2>
-            <p>Here's my detailed resume. You can view it below or download the PDF.</p>
+        <section id="resume" class="content-section reveal">
+            <h2 class="section-label"><span class="section-index">02</span>Resume</h2>
+            <p class="section-note">Here's my detailed resume. You can view it below or download the PDF.</p>
 
-            <div class="resume-container">
+            <div class="resume-container frame">
                 <iframe src="resume.pdf" title="Tal Ben Ami's Resume" class="resume-iframe">
                     <p>Your browser does not support embedded PDFs. Please <a href="resume.pdf" download>download the
                             PDF</a> to view it.</p>
                 </iframe>
             </div>
-            <a href="resume.pdf" download class="download-button">Download Resume (PDF)</a>
-        </section>
-
-        <section id="contact" class="content-section">
-            <h2>Get In Touch</h2>
-            <ul class="contact-links">
-                <li>Email: <a href="mailto:talba225@gmail.com">talba225@gmail.com</a></li>
-                <li>LinkedIn: <a href="https://www.linkedin.com/in/tal-ben-ami/" target="_blank"
-                        rel="noopener noreferrer">linkedin.com/in/tal-ben-ami</a></li>
-            </ul>
+            <a href="resume.pdf" download class="download-button">Download resume (PDF)</a>
         </section>
     </main>
 
     <footer class="site-footer">
-        <p>&copy; <span id="current-year"></span> Tal Ben Ami. All rights reserved.</p>
+        <p>&copy; <span id="current-year"></span> Tal Ben Ami</p>
+        <p>All rights reserved</p>
     </footer>
 
     <script>
+        document.documentElement.classList.add('js');
         document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        const observer = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target);
+                }
+            }
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
     </script>
 </body>
 
