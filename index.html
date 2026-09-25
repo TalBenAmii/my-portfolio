@@ -91,15 +91,15 @@
             <p class="section-note">Here's my detailed resume. You can view it below or download the PDF.</p>
 
             <div class="resume-container frame">
-                <iframe src="resume.pdf" title="Tal Ben Ami's Resume" class="resume-iframe">
-                    <p>Your browser does not support embedded PDFs. Please <a href="resume.pdf" download>download the
+                <iframe src="resume.pdf?v=b72dee72682b" title="Tal Ben Ami's Resume" class="resume-iframe">
+                    <p>Your browser does not support embedded PDFs. Please <a href="resume.pdf?v=b72dee72682b" download>download the
                             PDF</a> to view it.</p>
                 </iframe>
-                <a href="resume.pdf" class="resume-preview" target="_blank" rel="noopener noreferrer">
-                    <img src="resume-preview.png" alt="First page of Tal Ben Ami's resume">
+                <a href="resume.pdf?v=b72dee72682b" class="resume-preview" target="_blank" rel="noopener noreferrer">
+                    <img src="resume-preview.png?v=b72dee72682b" alt="First page of Tal Ben Ami's resume">
                 </a>
             </div>
-            <a href="resume.pdf" download class="download-button">Download resume (PDF)</a>
+            <a href="resume.pdf?v=b72dee72682b" download="Tal-Ben-Ami-Resume.pdf" class="download-button">Download resume (PDF)</a>
         </section>
     </main>
 
@@ -173,7 +173,7 @@
             whoami: () => 'Tal Ben Ami, Computer Engineering BSc student',
             ls: () => 'about  resume.pdf  github  linkedin',
             email: () => 'talba225@gmail.com',
-            'cat resume': () => { window.open('resume.pdf', '_blank'); return 'opening resume.pdf'; },
+            'cat resume': () => { window.open('resume.pdf?v=b72dee72682b', '_blank'); return 'opening resume.pdf'; },
             'open github': () => { window.open('https://github.com/TalBenAmii', '_blank'); return 'opening github.com/TalBenAmii'; },
             'open linkedin': () => { window.open('https://www.linkedin.com/in/tal-ben-ami/', '_blank'); return 'opening linkedin.com/in/tal-ben-ami'; },
         };
